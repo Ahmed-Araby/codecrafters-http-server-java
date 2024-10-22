@@ -1,5 +1,4 @@
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -19,11 +18,25 @@ public class Main {
        serverSocket.setReuseAddress(true);
 
        final Socket socket = serverSocket.accept(); // Wait for connection from client.
-       final OutputStream outStream = socket.getOutputStream();
-       final String response = "HTTP/1.1 200 OK\r\n\r\n";
-       outStream.write(response.getBytes(StandardCharsets.UTF_8));
-       outStream.close();
        System.out.println("accepted new connection");
+
+       final InputStream byteStream = socket.getInputStream();
+       final EagerRequestParser eagerReqParser = new EagerRequestParser();
+
+       final Request request = eagerReqParser.parse(byteStream);
+       System.out.println(request);
+       String response;
+       if ("/".equals(request.target)) {
+         response = ResponseBuilder.build200();
+       } else {
+         response = ResponseBuilder.build404();
+       }
+       final OutputStream responseStream = socket.getOutputStream();
+       responseStream.write(response.getBytes(StandardCharsets.UTF_8));
+
+       eagerReqParser.close();
+       responseStream.close(); // would this be a problem
+
      } catch (IOException e) {
        System.out.println("IOException: " + e.getMessage());
      }
