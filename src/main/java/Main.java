@@ -28,6 +28,9 @@ public class Main {
        String response;
        if ("/".equals(request.target)) {
          response = ResponseBuilder.build200();
+       } else if ("echo".equals(request.target.split("/")[1])) {
+         String body = request.target.split("/")[2];
+         response = ResponseBuilder.buildWithBody(body);
        } else {
          response = ResponseBuilder.build404();
        }
