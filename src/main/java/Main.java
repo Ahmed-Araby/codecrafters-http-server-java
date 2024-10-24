@@ -1,7 +1,11 @@
+import endpoints.EndPoint;
+import helpers.EagerRequestParser;
+import helpers.TargetSwitch;
+import models.Request;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 
 public class Main {
   public static void main(String[] args) {
@@ -25,14 +29,12 @@ public class Main {
 
        final Request request = eagerReqParser.parse(byteStream);
        System.out.println(request);
-       String response;
-       if ("/".equals(request.target)) {
-         response = ResponseBuilder.build200();
-       } else {
-         response = ResponseBuilder.build404();
-       }
+
+       final EndPoint endPoint = TargetSwitch.getEndpoint(request);
+       final byte[] responseBytes = endPoint.handle(request);
+
        final OutputStream responseStream = socket.getOutputStream();
-       responseStream.write(response.getBytes(StandardCharsets.UTF_8));
+       responseStream.write(responseBytes);
 
        eagerReqParser.close();
        responseStream.close(); // would this be a problem

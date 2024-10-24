@@ -1,10 +1,10 @@
 [![progress-banner](https://backend.codecrafters.io/progress/http-server/c5fc8fbc-fbdf-4b13-952e-4b313c0967a8)](https://app.codecrafters.io/users/codecrafters-bot?r=2qF)
 
 This is a starting point for Java solutions to the
-["Build Your Own HTTP server" Challenge](https://app.codecrafters.io/courses/http-server/overview).
+["Build Your Own HTTP helpers" Challenge](https://app.codecrafters.io/courses/http-server/overview).
 
 [HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) is the
-protocol that powers the web. In this challenge, you'll build a HTTP/1.1 server
+protocol that powers the web. In this challenge, you'll build a HTTP/1.1 helpers
 that is capable of serving multiple clients.
 
 Along the way you'll learn about TCP servers,
@@ -16,7 +16,7 @@ and more.
 
 # Passing the first stage
 
-The entry point for your HTTP server implementation is in
+The entry point for your HTTP helpers implementation is in
 `src/main/java/Main.java`. Study and uncomment the relevant code, and push your
 changes to pass the first stage:
 
