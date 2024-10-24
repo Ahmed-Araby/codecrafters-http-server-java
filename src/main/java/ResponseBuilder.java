@@ -1,7 +1,3 @@
-package helpers;
-
-// [TODO] to be deleted
-@Deprecated
 public class ResponseBuilder {
 
     static public String build(String code, String msg) {
