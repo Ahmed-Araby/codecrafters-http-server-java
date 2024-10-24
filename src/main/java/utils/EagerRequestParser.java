@@ -14,7 +14,9 @@ public class EagerRequestParser implements Closeable
         final InputStreamReader charStream = new InputStreamReader(byteStream, StandardCharsets.UTF_8);
         lineReader = new BufferedReader(charStream);
         final String requestLine = lineReader.readLine();
-
+        if (requestLine == null) {
+            return null;
+        }
         final String[] requestLineTokens = requestLine.split(" ");
 
         return new Request(requestLineTokens[0], requestLineTokens[1], requestLineTokens[2]);

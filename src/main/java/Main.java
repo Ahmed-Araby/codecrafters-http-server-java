@@ -28,7 +28,13 @@ public class Main {
        final EagerRequestParser eagerReqParser = new EagerRequestParser();
 
        final Request request = eagerReqParser.parse(byteStream);
-       System.out.println(request);
+       System.out.println("Request : " + request);
+
+       if(request == null) {
+         eagerReqParser.close();
+         return;
+       }
+
        String response;
        if ("/".equals(request.target)) {
          response = ResponseBuilder.build200();
