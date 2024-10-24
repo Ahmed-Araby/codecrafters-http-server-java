@@ -1,3 +1,5 @@
+import endpoints.IndexEndpoint;
+import endpoints.NotFoundEndpoint;
 import models.Request;
 import utils.EagerRequestParser;
 import utils.ResponseBuilder;
@@ -37,12 +39,12 @@ public class Main {
 
        String response;
        if ("/".equals(request.target)) {
-         response = ResponseBuilder.build200();
+         response = new String(new IndexEndpoint().handle(request), StandardCharsets.UTF_8);
        } else if ("echo".equals(request.target.split("/")[1])) {
          String body = request.target.split("/")[2];
          response = ResponseBuilder.buildWithBody(body);
        } else {
-         response = ResponseBuilder.build404();
+         response = new String(new NotFoundEndpoint().handle(request), StandardCharsets.UTF_8);
        }
        final OutputStream responseStream = socket.getOutputStream();
        responseStream.write(response.getBytes(StandardCharsets.UTF_8));
