@@ -1,3 +1,5 @@
+package utils;
+
 public class ResponseBuilder {
 
     static public String build(String code, String msg) {
