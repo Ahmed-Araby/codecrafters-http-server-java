@@ -1,3 +1,4 @@
+import endpoints.BodyEndpoint;
 import endpoints.IndexEndpoint;
 import endpoints.NotFoundEndpoint;
 import models.Request;
@@ -42,7 +43,7 @@ public class Main {
          response = new String(new IndexEndpoint().handle(request), StandardCharsets.UTF_8);
        } else if ("echo".equals(request.target.split("/")[1])) {
          String body = request.target.split("/")[2];
-         response = ResponseBuilder.buildWithBody(body);
+         response = new String(new BodyEndpoint().handle(request), StandardCharsets.UTF_8);
        } else {
          response = new String(new NotFoundEndpoint().handle(request), StandardCharsets.UTF_8);
        }
