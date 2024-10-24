@@ -1,9 +1,10 @@
 import endpoints.BodyEndpoint;
+import endpoints.EndPoint;
 import endpoints.IndexEndpoint;
 import endpoints.NotFoundEndpoint;
 import models.Request;
 import utils.EagerRequestParser;
-import utils.ResponseBuilder;
+import utils.TargetSwitch;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -38,17 +39,11 @@ public class Main {
          return;
        }
 
-       String response;
-       if ("/".equals(request.target)) {
-         response = new String(new IndexEndpoint().handle(request), StandardCharsets.UTF_8);
-       } else if ("echo".equals(request.target.split("/")[1])) {
-         String body = request.target.split("/")[2];
-         response = new String(new BodyEndpoint().handle(request), StandardCharsets.UTF_8);
-       } else {
-         response = new String(new NotFoundEndpoint().handle(request), StandardCharsets.UTF_8);
-       }
+       final EndPoint endPoint = TargetSwitch.getEndpoint(request);
+       final byte[] responseBytes = endPoint.handle(request);
+
        final OutputStream responseStream = socket.getOutputStream();
-       responseStream.write(response.getBytes(StandardCharsets.UTF_8));
+       responseStream.write(responseBytes);
 
        eagerReqParser.close();
        responseStream.close(); // would this be a problem
