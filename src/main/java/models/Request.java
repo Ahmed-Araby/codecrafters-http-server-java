@@ -10,16 +10,18 @@ public class Request {
     public String body;
 
 
-    public Request(String method, String target, String protocol) {
+    public Request(String method, String target, String protocol, List<Header> headers) {
         this.method = method;
         this.target = target;
         this.protocol = protocol;
+        this.headers = headers;
     }
 
     @Override
     public String toString() {
         return "method= " + method + "," +
                 "target = " + target + "," +
-                "protocol = " + protocol;
+                "protocol = " + protocol + "," +
+                "headers[] = " + headers;
     }
 }

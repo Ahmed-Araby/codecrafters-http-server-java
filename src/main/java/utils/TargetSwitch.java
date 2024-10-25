@@ -1,9 +1,6 @@
 package utils;
 
-import endpoints.BodyEndpoint;
-import endpoints.EndPoint;
-import endpoints.IndexEndpoint;
-import endpoints.NotFoundEndpoint;
+import endpoints.*;
 import models.Request;
 
 import java.util.regex.Pattern;
@@ -18,6 +15,8 @@ public class TargetSwitch {
         switch (tokens[1]) {
             case "echo":
                 return new BodyEndpoint();
+            case "user-agent":
+                return new UserAgentEndpoint();
             default:
                 return new NotFoundEndpoint();
         }
