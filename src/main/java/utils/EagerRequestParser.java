@@ -39,7 +39,8 @@ public class EagerRequestParser implements Closeable
         String line;
         while(true) {
             line = lineReader.readLine();
-            if (line.equals("") || line == null) { // CRLF (\r\n) are being read as empty line
+            if (line.equals("") || line == null) { // CRLF (\r\n) is being ignore as it represent the line
+                // separator / terminator, hence the extracted line is what comes before the CRLF with is empty line
                 break;
             }
             final String[] headerTokens = line.split(": ");
