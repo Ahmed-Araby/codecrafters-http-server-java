@@ -40,6 +40,8 @@ public class TargetSwitch {
     public static EndPoint postSwitch(Request request) {
         final String[] tokens = Pattern.compile("/").split(request.target);
         switch (tokens[1]) {
+            case "files":
+                return new WriteFilesEndpoint();
             default:
                 return new NotFoundEndpoint();
         }
