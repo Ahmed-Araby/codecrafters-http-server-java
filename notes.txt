@@ -1,0 +1,23 @@
+- POST /files/index.html HTTP/1.1\r\nContent-Length: 5\r\n\r\nahmed
+- weird stuff we have
+	- \r\n are being interpreted as empty line, which now make sense, as they are empty line, so readLine ignore them and give you an empty line
+	- after further calls to readLine hults, and not it make sense because readLine didn't find out the end of  line yet
+	- using read on the uderlying byte stream is hulting -> which is so fucking weird
+		- here is the thing, read of InputStream read bytes and it will block if it can't read the exact number of bytes it been asked for, for example it were asked for 5 bytes, however the stream only have available 3 bytes then it will block untill reciving end of stream signal (which require the special tcp packet for the jvm to close the input stream, I am not sure about this)
+		- using read of InputStreamReader reads characters, and when if it managed to read some characters even if they are less than the number of characters it have been asked to read, it will return without blocking (no idea why the implementation like this, but I think I might have sine intuation).
+
+so what to fucking do now ?
+
+
+- [TODO]
+    - read about file streams
+    - read about input / output streams
+    - read about how close a stream
+    - read about to signal an end of a stream
+        - should it be made in the application level
+        - or is it made on the TCP level
+    - read about line terminator
+    - read about line separator
+    - read about the need for files to end with new line
+    - read about null character and End Of File.
+    - read about the blocking behaviour of some Input streams / readers
