@@ -17,6 +17,18 @@ public class Main {
 
       ServerSocket serverSocket = new ServerSocket(4221);
       serverSocket.setReuseAddress(true);
+
+      // shutdown hook, read more about this it may be helpful
+//      Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+//          try {
+//              System.out.println("release 4221 port!");
+//              serverSocket.close();
+//
+//          } catch (IOException e) {
+//              throw new RuntimeException(e);
+//          }
+//      }));
+
       final ExecutorService executorService = Executors.newCachedThreadPool();
 
       while(true) {

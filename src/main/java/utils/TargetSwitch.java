@@ -17,6 +17,8 @@ public class TargetSwitch {
                 return new BodyEndpoint();
             case "user-agent":
                 return new UserAgentEndpoint();
+            case "files":
+                return new FilesEndpoint();
             default:
                 return new NotFoundEndpoint();
         }
