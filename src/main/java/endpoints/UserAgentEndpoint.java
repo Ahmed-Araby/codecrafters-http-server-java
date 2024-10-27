@@ -2,6 +2,7 @@ package endpoints;
 
 import models.Header;
 import models.Request;
+import models.Response;
 import utils.Constants;
 
 import java.nio.charset.StandardCharsets;
@@ -12,7 +13,7 @@ import java.util.stream.Stream;
 
 public class UserAgentEndpoint implements EndPoint{
     @Override
-    public byte[] handle(Request request) {
+    public Response handle(Request request) {
         List<Header> headers = request.headers;
         final String userAgentValue = Stream.ofNullable(headers)
                 .flatMap(Collection::stream)
@@ -21,10 +22,8 @@ public class UserAgentEndpoint implements EndPoint{
                 .map(header -> header.value)
                 .findAny()
                 .orElse("");
-        return ("HTTP/1.1 200 OK" + Constants.END_LINE +
-                "Content-Length: " + userAgentValue.length() + Constants.END_LINE +
-                "Content-type: text/plain" + Constants.END_LINE +
-                Constants.END_LINE +
-                userAgentValue).getBytes(StandardCharsets.UTF_8);
+        headers.add(Header.of("Content-Length", String.valueOf(userAgentValue.length())));
+        headers.add(Header.of("content-TypE", "text/plain"));
+        return new Response(200, "OK", headers, userAgentValue.getBytes(StandardCharsets.UTF_8));
     }
 }

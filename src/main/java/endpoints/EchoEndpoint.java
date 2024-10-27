@@ -1,36 +1,33 @@
 package endpoints;
 
 import models.EncodingSchemaE;
+import models.Header;
 import models.Request;
-import utils.Constants;
+import models.Response;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class EchoEndpoint implements EndPoint {
 
     @Override
-    public byte[] handle(Request request) {
+    public Response handle(Request request) {
         final String[] tokens = request.target.split("/");
         final String pathArgument = tokens[2];
-        return (
-                "HTTP/1.1 200 OK" + Constants.END_LINE +
-                        "Content-Length: " + pathArgument.length() + Constants.END_LINE +
-                        "Content-Type: text/plain" + Constants.END_LINE +
-                        this.buildEncodingHeaderIfSupported(request) +
-                        Constants.END_LINE +
-                        pathArgument
-                ).getBytes(StandardCharsets.UTF_8);
+        List<Header> headers = new ArrayList<>();
+        headers.add(Header.of("Content-Length", String.valueOf(pathArgument.length())));
+        headers.add(Header.of("Content-Type", "text/plain"));
+        this.buildEncodingHeaderIfSupported(request).ifPresent(headers::add);
+
+        return new Response(200, "OK", headers, pathArgument.getBytes(StandardCharsets.UTF_8));
     }
 
-    private String buildEncodingHeaderIfSupported(Request request) {
+    private Optional<Header> buildEncodingHeaderIfSupported(Request request) {
         List<EncodingSchemaE> encodingSchemas = this.getAcceptedEncodingSchemas(request);
         return encodingSchemas.contains(EncodingSchemaE.GZIP) ?
-                "Content-Encoding: " + EncodingSchemaE.GZIP.toString().toLowerCase() + Constants.END_LINE:
-                "";
+                Optional.of(Header.of("Content-Encoding", EncodingSchemaE.GZIP.toString().toLowerCase())) :
+                Optional.empty();
     }
 
     private List<EncodingSchemaE> getAcceptedEncodingSchemas(Request request) {

@@ -1,6 +1,8 @@
 import endpoints.EndPoint;
 import models.Request;
+import models.Response;
 import utils.EagerRequestParser;
+import utils.ResponseSerializer;
 import utils.TargetSwitch;
 
 import java.io.IOException;
@@ -23,11 +25,15 @@ public class Server {
         }
 
         final EndPoint endPoint = TargetSwitch.getEndpoint(request);
-        final byte[] responseBytes = endPoint.handle(request);
-        System.out.println("response = " + new String(responseBytes));
+        final Response response = endPoint.handle(request);
+        System.out.println("response = " + response);
+
+        // [TODO] I think there should be a way to determine how much bytes to write at once, should this be application level concern ?
+        final byte[] responseBytes = ResponseSerializer.serialize(response);
         final OutputStream responseStream = socket.getOutputStream();
         responseStream.write(responseBytes);
 
+        // [TODO] think more about what to close and in what order, and what is the effect of closing something which is already closed
         eagerReqParser.close();
         responseStream.close(); // would this be a problem ?
     }

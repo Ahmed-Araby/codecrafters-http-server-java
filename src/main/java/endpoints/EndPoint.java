@@ -1,7 +1,8 @@
 package endpoints;
 
 import models.Request;
+import models.Response;
 
 public interface EndPoint {
-    byte[] handle(Request request);
+    Response handle(Request request);
 }

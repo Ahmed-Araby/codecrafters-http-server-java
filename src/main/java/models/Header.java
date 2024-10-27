@@ -9,6 +9,10 @@ public class Header {
         this.value = value;
     }
 
+    public static Header of(String key, String value) {
+        return new Header(key, value);
+    }
+
     @Override
     public String toString() {
         return "key= " + key +

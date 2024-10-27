@@ -21,3 +21,12 @@ so what to fucking do now ?
     - read about the need for files to end with new line
     - read about null character and End Of File.
     - read about the blocking behaviour of some Input streams / readers
+
+
+# Note #1
+    - based on the content type the client (e.g. browser) decide how to deal with the response content
+    - e.x: if the content type application/octet-stream -> the client will download the response body / content as file
+    - if the content type text/html the browser will render the content as html
+    - if the content-type header is text/plain the browser will display the content / response body as it is (normal text without special meaning for the html tags) without special rendering.
+    - this is very stupid, actually I need to find a way to make the end points write bytes directly to the output stream, to avoid constructing the whole response at once
+
