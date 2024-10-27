@@ -27,7 +27,7 @@ public class TargetSwitch {
         }
         switch (tokens[1]) {
             case "echo":
-                return new BodyEndpoint();
+                return new EchoEndpoint();
             case "user-agent":
                 return new UserAgentEndpoint();
             case "files":
