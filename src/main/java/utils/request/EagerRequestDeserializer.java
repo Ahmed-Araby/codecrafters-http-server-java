@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 // [TODO] implement LazyRequestParser, it will be interesting to do the design for it.
-public class EagerRequestParser implements Closeable
+public class EagerRequestDeserializer implements Closeable
 {
     BufferedReader lineReader;
 
-    public Request parse(InputStream byteStream) throws IOException {
+    public Request deserialize(InputStream byteStream) throws IOException {
         final InputStreamReader charStream = new InputStreamReader(byteStream, StandardCharsets.UTF_8);
         lineReader = new BufferedReader(charStream);
         final String requestLine = lineReader.readLine();
@@ -28,13 +28,13 @@ public class EagerRequestParser implements Closeable
         }
 
         final String[] requestLineTokens = requestLine.split(" "); // request line
-        final List<Header> headers = this.parseHeaders(); // headers
-        final byte[] body = this.parseBody(headers);
+        final List<Header> headers = this.deserializeHeaders(); // headers
+        final byte[] body = this.deserializeBody(headers);
         return new Request(requestLineTokens[0], requestLineTokens[1], requestLineTokens[2], headers, body);
 
     }
 
-    private List<Header> parseHeaders() throws IOException {
+    private List<Header> deserializeHeaders() throws IOException {
         final List<Header> headers = new ArrayList<>();
         String line;
         while(true) {
@@ -49,7 +49,7 @@ public class EagerRequestParser implements Closeable
         return headers;
     }
 
-    private byte[] parseBody(List<Header> headers) throws IOException {
+    private byte[] deserializeBody(List<Header> headers) throws IOException {
         // [TODO] it is stupid that we extract chars then convert to bytes,
         // and I think the design issue is that we depend on BufferedReader to parse the request,
         // instead we should have operated on the byte level till we build the request.

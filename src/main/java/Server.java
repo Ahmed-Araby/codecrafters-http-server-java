@@ -1,7 +1,7 @@
 import endpoints.EndPoint;
 import models.Request;
 import models.Response;
-import utils.request.EagerRequestParser;
+import utils.request.EagerRequestDeserializer;
 import utils.response.ResponseProcessor;
 import utils.response.ResponseSerializer;
 import utils.TargetSwitch;
@@ -15,9 +15,9 @@ public class Server {
 
     public static void serve(Socket socket) throws IOException {
         final InputStream byteStream = socket.getInputStream();
-        final EagerRequestParser eagerReqParser = new EagerRequestParser();
+        final EagerRequestDeserializer eagerReqParser = new EagerRequestDeserializer();
 
-        final Request request = eagerReqParser.parse(byteStream);
+        final Request request = eagerReqParser.deserialize(byteStream);
         System.out.println("Request : " + request);
 
         if(request == null) {
