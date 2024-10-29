@@ -3,11 +3,9 @@ package endpoints;
 import models.Request;
 import models.Response;
 import utils.Configs;
-import utils.Constants;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
 public class WriteFilesEndpoint implements EndPoint{

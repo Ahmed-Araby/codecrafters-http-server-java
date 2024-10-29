@@ -2,6 +2,7 @@ import endpoints.EndPoint;
 import models.Request;
 import models.Response;
 import utils.EagerRequestParser;
+import utils.ResponseProcessor;
 import utils.ResponseSerializer;
 import utils.TargetSwitch;
 
@@ -26,6 +27,7 @@ public class Server {
 
         final EndPoint endPoint = TargetSwitch.getEndpoint(request);
         final Response response = endPoint.handle(request);
+        ResponseProcessor.process(response, request);
         System.out.println("response = " + response);
 
         // [TODO] I think there should be a way to determine how much bytes to write at once, should this be application level concern ?
