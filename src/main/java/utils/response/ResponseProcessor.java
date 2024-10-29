@@ -1,10 +1,11 @@
-package utils;
+package utils.response;
 
 import compression.GzipCompressor;
 import models.EncodingSchemaE;
 import models.Header;
 import models.Request;
 import models.Response;
+import utils.HeaderUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

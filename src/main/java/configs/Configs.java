@@ -1,4 +1,4 @@
-package utils;
+package configs;
 
 public class Configs {
     public static String FILES_ABSOLUTE_PATH;

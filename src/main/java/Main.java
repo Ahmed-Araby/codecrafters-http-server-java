@@ -1,4 +1,4 @@
-import utils.Configs;
+import configs.Configs;
 
 import java.io.*;
 import java.net.ServerSocket;

@@ -1,9 +1,9 @@
 import endpoints.EndPoint;
 import models.Request;
 import models.Response;
-import utils.EagerRequestParser;
-import utils.ResponseProcessor;
-import utils.ResponseSerializer;
+import utils.request.EagerRequestParser;
+import utils.response.ResponseProcessor;
+import utils.response.ResponseSerializer;
 import utils.TargetSwitch;
 
 import java.io.IOException;

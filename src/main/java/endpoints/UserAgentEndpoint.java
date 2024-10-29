@@ -3,7 +3,7 @@ package endpoints;
 import models.Header;
 import models.Request;
 import models.Response;
-import utils.Constants;
+import constants.Constants;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;

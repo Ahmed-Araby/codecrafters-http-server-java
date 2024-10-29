@@ -1,6 +1,8 @@
-package utils;
+package utils.response;
 
 import models.Response;
+import utils.ArrayUtils;
+import constants.Constants;
 
 import java.nio.charset.StandardCharsets;
 

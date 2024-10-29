@@ -2,7 +2,7 @@ package endpoints;
 
 import models.Request;
 import models.Response;
-import utils.Configs;
+import configs.Configs;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

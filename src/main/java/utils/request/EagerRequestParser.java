@@ -1,4 +1,4 @@
-package utils;
+package utils.request;
 
 import models.Header;
 import models.Request;
